@@ -29,6 +29,8 @@ O código de Flutter: Web API - Integrando sua Aplicação são **Classes** e **
 
   [ cd server ]
   [ json-server --watch --host 10.10.100.38 db.json ]
+  [ json-server-auth --watch --host 10.10.100.38 db.json]
+  [ json-server-auth --watch --host 10.10.100.38 db.json -r routes.json ]
 
 ## 📚 Mais informações do curso
 

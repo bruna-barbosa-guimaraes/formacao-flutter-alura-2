@@ -1,25 +1,40 @@
 {
+  "users": [
+    {
+      "email": "bruna.guimaraes@qyon.com",
+      "password": "$2a$10$E1Ivm.uDtmivcRZKrHB6WOviManM.ysFhyJo3/e9Md8KXahokcC/6",
+      "id": 1
+    },
+    {
+      "email": "vinicius.guimaraes@qyon.com",
+      "password": "$2a$10$hTfsqwu/k1LGBG0.pL/AvO1hsTKzlhf0Y2aSOTofr7w/zv3kUWSTy",
+      "id": 2
+    }
+  ],
   "learnhttp": {
     "content": "Olá mundo"
   },
   "journals": [
     {
-      "id": "e4a43330-98cc-11ed-b789-75a3237de07e",
-      "content": "teste 1",
-      "created_at": "2023-01-11 11:15:23.186511",
-      "updated_at": "2023-01-11 11:15:23.186511"
+      "id": "742a5200-9cce-11ed-9ccb-bb4db8f694c8",
+      "content": "dia 1 teste",
+      "created_at": "2023-01-15 13:36:39.168367",
+      "updated_at": "2023-01-15 13:36:39.168367",
+      "userId": 1
     },
     {
-      "id": "eae30410-98cc-11ed-b789-75a3237de07e",
-      "content": "teste 2",
-      "created_at": "2023-01-12 11:15:23.186511",
-      "updated_at": "2023-01-12 11:15:23.186511"
+      "id": "7d81ad80-9cce-11ed-9ccb-bb4db8f694c8",
+      "content": "teste teste",
+      "created_at": "2023-01-17 13:36:39.168367",
+      "updated_at": "2023-01-17 13:36:39.168367",
+      "userId": 1
     },
     {
-      "id": "ee2a18c0-98cc-11ed-b789-75a3237de07e",
-      "content": "teste 3",
-      "created_at": "2023-01-13 11:15:23.186511",
-      "updated_at": "2023-01-13 11:15:23.186511"
+      "id": "862dadd0-9cce-11ed-9ccb-bb4db8f694c8",
+      "content": "teste",
+      "created_at": "2023-01-20 13:36:39.168367",
+      "updated_at": "2023-01-20 13:36:39.168367",
+      "userId": 1
     }
   ]
 }

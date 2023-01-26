@@ -1,7 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_webapi_first_course/screens/commom/exception_dialog.dart';
 import 'package:flutter_webapi_first_course/screens/home_screen/widgets/home_screen_list.dart';
 import 'package:flutter_webapi_first_course/services/journal_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../helpers/logout.dart';
 import '../../models/journal.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -25,6 +30,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   JournalService service = JournalService();
 
+  int? userId;
+
+  String? userToken;
+
   @override
   void initState() {
     refresh();
@@ -47,24 +56,61 @@ class _HomeScreenState extends State<HomeScreen> {
               icon: const Icon(Icons.refresh))
         ],
       ),
-      body: ListView(
-        controller: _listScrollController,
-        children: generateListJournalCards(
-            windowPage: windowPage,
-            currentDay: currentDay,
-            database: database,
-            refreshFunction: refresh),
+      body: (userId != null && userToken != null)
+          ? ListView(
+              controller: _listScrollController,
+              children: generateListJournalCards(
+                windowPage: windowPage,
+                currentDay: currentDay,
+                database: database,
+                refreshFunction: refresh,
+                userId: userId!,
+                token: userToken!,
+              ),
+            )
+          : const Center(
+              child: CircularProgressIndicator(),
+            ),
+      drawer: Drawer(
+        child: ListTile(
+          onTap: () {
+            logout(context);
+          },
+          title: const Text("Sair"),
+          leading: const Icon(Icons.logout),
+        ),
       ),
     );
   }
 
-  void refresh() async {
-    List<Journal> listJournal = await service.getAll();
-    setState(() {
-      database = {};
-      for (Journal journal in listJournal) {
-        database[journal.id] = journal;
+  void refresh() {
+    SharedPreferences.getInstance().then((prefs) {
+      String? token = prefs.getString("accessToken");
+      String? email = prefs.getString("email");
+      int? id = prefs.getInt("id");
+
+      if (token != null && email != null && id != null) {
+        setState(() {
+          userId = id;
+          userToken = token;
+        });
+        service
+            .getAll(id: id.toString(), token: token)
+            .then((List<Journal> listJournal) {
+          setState(() {
+            database = {};
+            for (Journal journal in listJournal) {
+              database[journal.id] = journal;
+            }
+          });
+        });
+      } else {
+        Navigator.pushReplacementNamed(context, "login");
       }
-    });
+    }).catchError((error) {
+      logout(context);
+    }, test: (error) => error is TokenNotValidException).catchError((error) {
+      showExceptionDialog(context, content: error.message);
+    }, test: (error) => error is HttpException);
   }
 }
